@@ -17,7 +17,7 @@ export const Appbar=({
     return (
         <div className="container">
         {/* Text Section */}
-        <div className="text-section">PayTM</div>
+        <div className="text-section">Referral</div>
   
         {/* Button Section */}
         <div className="button-section">

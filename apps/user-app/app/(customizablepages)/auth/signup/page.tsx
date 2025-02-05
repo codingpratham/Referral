@@ -1,5 +1,11 @@
-import { Signup } from "../../../../components/Signup"
+import { Signup } from "../../../../components/Signup";
 
-export const SignUp=()=>{
-    return <Signup/>
+const page = () => {
+    return (
+        <div>
+            <Signup/>
+        </div>
+    );
 }
+
+export default page;
