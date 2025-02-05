@@ -15,16 +15,10 @@ export const Appbar=({
     onSignout
 }:AppbarProps)=>{
     return (
-        <div className="container">
-        {/* Text Section */}
-        <div className="text-section">Referral</div>
-  
-        {/* Button Section */}
         <div className="button-section">
           <Button onClick={user ? onSignout : onSignin}>
             {user ? "Logout" : "Login"}
           </Button>
         </div>
-      </div>
     )
 }

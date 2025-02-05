@@ -1,14 +1,20 @@
-"use client"; // ✅ Fix: Ensures this is a Client Component
-
-import { useSession, signIn, signOut } from "next-auth/react";
-import {Appbar} from "@repo/ui/Appbar";
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+import FeaturedJobs from "@/components/FeaturedJobs";
+import Footer from "@/components/Footer";
 
 export default function Home() {
-  const session = useSession();
 
   return (
     <>
-      <Appbar onSignin={signIn} onSignout={signOut} user={session.data?.user} />
+      <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-grow">
+        <Hero />
+        <FeaturedJobs />
+      </main>
+      <Footer />
+    </div>
     </>
   );
 }

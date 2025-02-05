@@ -26,7 +26,7 @@ export const Signin=()=>{
 
             if(res?.ok){
                 toast("Sign in successfully")
-                router.push('/dashboard')
+                router.push('/uploads')
             }
             else{
                 return "something went wrong"
