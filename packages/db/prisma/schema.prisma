@@ -14,15 +14,25 @@ model User {
   number String? @unique
   password String
 
-  image String?
   resume String?
   bio String?
   description String?
+  image File[]
   experience Experience[]
   education Education[]
   projects Projects[]
   skills Skill[]
   createdAt DateTime @default(now())
+}
+
+model File{
+  id Int @id @default(autoincrement())
+  name String
+  path String
+  size Int
+  uploaderName String?
+  userId Int
+  user User @relation(fields: [userId], references: [id]) 
 }
 
 model Experience{
