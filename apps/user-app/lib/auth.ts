@@ -64,13 +64,18 @@ export const authOptions={
                             email:credentials.email,
                             number:credentials.phone,
                             password:hashedPassword,
+                            education:credentials.education,
+                            experience:credentials.experience,
+                            skills:credentials.skills,
+                            projects:credentials.projects,
+                            bio:credentials.bio,
+                            description:credentials.description
                         }
                     })
 
                     return{
                         id:user.id.toString(),
-                        name:user.name,
-                        email:user.email,
+                        "success":"login successful"
                     }
                 } catch (error) {
                     console.log(error);
