@@ -25,7 +25,6 @@ export const Signin = () => {
       endDate: "" 
     },
   ])
-  const [profilePicture, setProfilePicture] = useState<File | null>(null);
   const [education, setEducation] = useState([
     {
       institution: "",
@@ -55,7 +54,6 @@ export const Signin = () => {
         education: JSON.stringify(education),
         projects: JSON.stringify(projects),
         skills: JSON.stringify(skills),
-        profilePicture,
         isSignup: true,
         redirect: false,
       })
@@ -82,20 +80,6 @@ export const Signin = () => {
               Referral
             </h1>
             <h2 className="text-xl font-semibold text-center mb-4">Sign in </h2>
-
-            <div className="mt-4">
-  <label className="block text-sm font-medium text-gray-700">Upload Profile Picture</label>
-  <input
-    type="file"
-    accept="image/*"
-    onChange={(e) => {
-      if (e.target.files && e.target.files[0]) {
-        setProfilePicture(e.target.files[0]);
-      }
-    }}
-    className="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
-  />
-</div>
 
             <div>
               <TextInput
