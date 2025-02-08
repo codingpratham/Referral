@@ -1,3 +1,5 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import CredentialsProvider from "next-auth/providers/credentials"
 import { prisma } from "@repo/db/client"
 import bcrypt from "bcrypt"
@@ -8,6 +10,7 @@ export const authOptions = {
       name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email", placeholder: "Enter your email" },
+        image:{label: "Image", type: "image", placeholder: "Enter your the image"},
         name: { label: "Name", type: "text", placeholder: "Enter your name" },
         phone: { label: "Phone", type: "tel", placeholder: "Enter your phone number" },
         password: { label: "Password", type: "password", placeholder: "Enter your password" },
@@ -45,6 +48,11 @@ export const authOptions = {
                 password: hashedPassword,
                 bio: credentials.bio || "",
                 description: credentials.description || "",
+                image:{
+                  create: (credentials.image)({
+                    
+                  })
+                },
                 experience: {
                   create: JSON.parse(credentials.experiences).map((exp: any) => ({
                     company: exp.company,
