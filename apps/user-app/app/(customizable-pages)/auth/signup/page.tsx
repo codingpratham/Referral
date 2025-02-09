@@ -1,9 +1,8 @@
-import { Signin } from "../../../../components/Signin";
-
+import SignUp from "../../../../components/SignUp"
 const page = () => {
     return (
         <div>
-            <Signin/>
+            <SignUp/>
         </div>
     );
 }

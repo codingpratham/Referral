@@ -1,4 +1,4 @@
-const ImageCard = () => {
+const page = () => {
     return (
         <div>
             Enter
@@ -6,4 +6,4 @@ const ImageCard = () => {
     );
 }
 
-export default ImageCard;
+export default page;
