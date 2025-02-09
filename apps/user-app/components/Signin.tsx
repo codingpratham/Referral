@@ -22,6 +22,7 @@ export const SignIn = () => {
         router.push("/dashboard");
       } else {
         toast.error(res?.error || "Something went wrong");
+        router.push("/auth/signup")
       }
     } catch (error) {
       console.log(error);

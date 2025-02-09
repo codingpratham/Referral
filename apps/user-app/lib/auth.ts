@@ -25,7 +25,7 @@ export const authOptions = {
           placeholder: "Enter your password",
         },
       },
-      async authorize(credentials: any) {
+      async authorize(credentials: any):Promise<any> {
         if (!credentials?.email || !credentials?.password) {
           throw new Error("Email and password are required");
         }
@@ -51,7 +51,7 @@ export const authOptions = {
               },
             });
 
-            return { id: newUser.id.toString(), email: newUser.email };
+            return { id: newUser.id, email: newUser.email };
           } catch (error) {
             console.error("Error creating user:", error);
             throw new Error("Failed to create user");
@@ -68,20 +68,27 @@ export const authOptions = {
           throw new Error("Invalid credentials");
         }
 
-        return { id: existingUser.id.toString(), email: existingUser.email };
+        return { id: existingUser.id, email: existingUser.email };
       },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET || "secret",
+  pages:{
+    signIn:"/auth/signin",
+  },
   callbacks: {
     async session({ session, token }: any) {
-      if (token?.sub) {
-        session.user = { ...session.user, id: token.sub };
+      if(session.user){
+        session.user.id=token.sub
       }
       return session;
-    },
   },
-  pages: {
-    signIn: "/auth/signin",
-  },
+  async jwt({token , user}:any){
+
+    if(user){
+      token.sub=user.id
+    }
+    return token;
+  }
+}
 };

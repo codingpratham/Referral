@@ -1,7 +1,9 @@
+import UserDetail from "@/components/UserDetail";
+
 const page = () => {
     return (
         <div>
-            Enter
+            <UserDetail/>
         </div>
     );
 }
