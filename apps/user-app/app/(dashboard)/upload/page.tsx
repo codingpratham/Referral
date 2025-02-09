@@ -1,7 +1,9 @@
+import Details from "@/components/Details";
+
 const page = () => {
     return (
         <div>
-            Enter
+            <Details/>
         </div>
     );
 }
