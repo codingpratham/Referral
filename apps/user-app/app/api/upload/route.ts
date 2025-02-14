@@ -17,45 +17,51 @@ export async function POST(req: Request) {
 
     try {
       if(data){
+
         const user= await prisma.user.create({
           data: {
             bio:data.bio,
             description: data.description,
-            userId:session.user.id,
-            education: {
-              create: {
-                institution: data.institution,
+            userId: session.user.id,
+          }
+        })
+        const education= await prisma.education.create({
+          data: {
+            institution: data.institution,
                 degree: data.degree,
                 startDate: data.startDate,
                 endDate: data.endDate,
                 grade: data.grade,
                 fieldOfStudy: data.fieldOfStudy,
-                
-              },
-            },
-            experience: {
-              create:{
-                company: data.company,
-                position: data.position,
-                startDate: data.startDate,
-                endDate: data.endDate,
-                description: data.description,
-              }
-            },
-            projects: {
-              create: {
-                title: data.projectTitle,
-                description: data.projectDescription,
-              },
-            },
-            skills:{
-              createMany: {
-                data: data.skills.split(",").map((skill:any) => ({ name: skill.trim() })),
-              },
-            }
-          },
+                userId: session.user.id,
+    
+          }
         })
-        if(user){
+
+        const experience= await prisma.experience.create({
+          data:{
+            company: data.company,
+            position: data.position,
+            startDate: data.startDate,
+            endDate: data.endDate,
+            description: data.description,
+            userId: session.user.id,
+          }
+        })
+        const projects= await prisma.projects.create({
+          data: {
+            title: data.projectTitle,
+            description: data.projectDescription,
+            userId: session.user.id,
+          }
+        })
+        const skills = await prisma.skill.createMany({
+          data: {
+            name: data.skills.split(",").map((skill:any) => skill.trim()),
+            userId: session.user.id,
+          }
+        })
+        if(user && experience && education && projects && skills){
           return NextResponse.json({
             success: "Details saved successfully",
             statusCode: 200,
