@@ -15,16 +15,14 @@ export async function POST(req: Request) {
       data[key] = value;
     });
 
-
-
     try {
       if(data){
         const user= await prisma.user.create({
           data: {
             bio:data.bio,
             description: data.description,
+            userId:session.user.id,
             education: {
-              // @ts-ignore
               create: {
                 institution: data.institution,
                 degree: data.degree,
@@ -32,7 +30,6 @@ export async function POST(req: Request) {
                 endDate: data.endDate,
                 grade: data.grade,
                 fieldOfStudy: data.fieldOfStudy,
-                userId: session?.user?.id
                 
               },
             },
@@ -81,5 +78,14 @@ export async function POST(req: Request) {
       error: "File upload failed",
       statusCode: 500,
     });
+  }
+}
+
+export async function DELETE(){
+  try {
+    await prisma.user.deleteMany({})
+  }
+  catch (error){
+    console.log(error)
   }
 }
