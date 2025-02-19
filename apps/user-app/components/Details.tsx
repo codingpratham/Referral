@@ -8,25 +8,16 @@ import { useRouter } from "next/navigation";
 const Details = () => {
   const router = useRouter();
   const [bio, setBio] = useState("");
-  const [description, setDescription] = useState("");
-  const [experience, setExperience] = useState({
-    company: "",
-    position: "",
-    startDate: "",
-    endDate: "",
-    description: "",
-  });
+  const [name, setName] = useState("");
+  const [experience, setExperience] = useState([
+    { company: "", position: "", startDate: "", endDate: "", description: "" },
+  ]);
 
-  const [education, setEducation] = useState({
-    institution: "",
-    degree: "",
-    startDate: "",
-    endDate: "",
-    fieldOfStudy: "",
-    grade: "",
-  });
+  const [education, setEducation] = useState([
+    { institution: "", degree: "", startDate: "", endDate: "", fieldOfStudy: "", grade: "" },
+  ]);
 
-  const [projects, setProjects] = useState({ title: "", description: "" });
+  const [projects, setProjects] = useState([{ title: "", description: "" }]);
   const [skills, setSkills] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,20 +25,10 @@ const Details = () => {
 
     const formData = new FormData();
     formData.append("bio", bio);
-    formData.append("description", description);
-    formData.append("company", experience.company);
-    formData.append("position", experience.position);
-    formData.append("startDate", experience.startDate);
-    formData.append("endDate", experience.endDate);
-    formData.append("experienceDescription", experience.description);
-    formData.append("institution", education.institution);
-    formData.append("degree", education.degree);
-    formData.append("eduStartDate", education.startDate);
-    formData.append("eduEndDate", education.endDate);
-    formData.append("fieldOfStudy", education.fieldOfStudy);
-    formData.append("grade", education.grade);
-    formData.append("projectTitle", projects.title);
-    formData.append("projectDescription", projects.description);
+    formData.append("description", name);
+    formData.append("experience", JSON.stringify(experience));
+    formData.append("education", JSON.stringify(education));
+    formData.append("projects", JSON.stringify(projects));
     formData.append("skills", skills);
 
     try {
@@ -76,26 +57,118 @@ const Details = () => {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input type="text" placeholder="Bio" value={bio} onChange={(e) => setBio(e.target.value)} />
-        <Input type="text" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
+        <Input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
 
         <h3 className="text-lg font-semibold mt-4">Experience</h3>
-        <Input type="text" placeholder="Company" value={experience.company} onChange={(e) => setExperience({ ...experience, company: e.target.value })} />
-        <Input type="text" placeholder="Position" value={experience.position} onChange={(e) => setExperience({ ...experience, position: e.target.value })} />
-        <Input type="date" placeholder="Start Date" value={experience.startDate} onChange={(e) => setExperience({ ...experience, startDate: e.target.value })} />
-        <Input type="date" placeholder="End Date" value={experience.endDate} onChange={(e) => setExperience({ ...experience, endDate: e.target.value })} />
-        <Input type="text" placeholder="Description" value={experience.description} onChange={(e) => setExperience({ ...experience, description: e.target.value })} />
+        {experience.map((exp, index) => (
+          <div key={index} className="space-y-2 border p-2">
+            <Input type="text" placeholder="Company" value={exp.company} onChange={(e) => {
+              const updatedExperience = [...experience];
+              if(updatedExperience[index])
+              updatedExperience[index].company = e.target.value;
+              setExperience(updatedExperience);
+            }} />
+            <Input type="text" placeholder="Position" value={exp.position} onChange={(e) => {
+              const updatedExperience = [...experience];
+              if(updatedExperience[index])
+              updatedExperience[index].position = e.target.value;
+              setExperience(updatedExperience);
+            }} />
+            <Input type="date" placeholder="Start Date" value={exp.startDate} onChange={(e) => {
+              const updatedExperience = [...experience];
+              if(updatedExperience[index])
+              updatedExperience[index].startDate = e.target.value;
+              setExperience(updatedExperience);
+            }} />
+            <Input type="date" placeholder="End Date" value={exp.endDate} onChange={(e) => {
+              const updatedExperience = [...experience];
+              if(updatedExperience[index])
+              updatedExperience[index].endDate = e.target.value;
+              setExperience(updatedExperience);
+            }} />
+            <Input type="text" placeholder="Description" value={exp.description} onChange={(e) => {
+              const updatedExperience = [...experience];
+              if(updatedExperience[index])
+              updatedExperience[index].description = e.target.value;
+              setExperience(updatedExperience);
+            }} />
+          </div>
+        ))}
+        <Button type="button" onClick={() => {
+          setExperience([...experience, { company: "", position: "", startDate: "", endDate: "", description: "" }]);
+        }}>
+          Add Experience
+        </Button>
 
         <h3 className="text-lg font-semibold mt-4">Education</h3>
-        <Input type="text" placeholder="Institution" value={education.institution} onChange={(e) => setEducation({ ...education, institution: e.target.value })} />
-        <Input type="text" placeholder="Degree" value={education.degree} onChange={(e) => setEducation({ ...education, degree: e.target.value })} />
-        <Input type="date" placeholder="Start Date" value={education.startDate} onChange={(e) => setEducation({ ...education, startDate: e.target.value })} />
-        <Input type="date" placeholder="End Date" value={education.endDate} onChange={(e) => setEducation({ ...education, endDate: e.target.value })} />
-        <Input type="text" placeholder="Field of Study" value={education.fieldOfStudy} onChange={(e) => setEducation({ ...education, fieldOfStudy: e.target.value })} />
-        <Input type="text" placeholder="Grade" value={education.grade} onChange={(e) => setEducation({ ...education, grade: e.target.value })} />
+        {education.map((edu, index) => (
+          <div key={index} className="space-y-2 border p-2">
+            <Input type="text" placeholder="Institution" value={edu.institution} onChange={(e) => {
+              const updatedEducation = [...education];
+              if(updatedEducation[index])
+              updatedEducation[index].institution = e.target.value;
+              setEducation(updatedEducation);
+            }} />
+            <Input type="text" placeholder="Degree" value={edu.degree} onChange={(e) => {
+              const updatedEducation = [...education];
+              if(updatedEducation[index])
+              updatedEducation[index].degree = e.target.value;
+              setEducation(updatedEducation);
+            }} />
+            <Input type="date" placeholder="Start Date" value={edu.startDate} onChange={(e) => {
+              const updatedEducation = [...education];
+              if(updatedEducation[index])
+              updatedEducation[index].startDate = e.target.value;
+              setEducation(updatedEducation);
+            }} />
+            <Input type="date" placeholder="End Date" value={edu.endDate} onChange={(e) => {
+              const updatedEducation = [...education];
+              if(updatedEducation[index])
+              updatedEducation[index].endDate = e.target.value;
+              setEducation(updatedEducation);
+            }} />
+            <Input type="text" placeholder="Field of Study" value={edu.fieldOfStudy} onChange={(e) => {
+              const updatedEducation = [...education];
+              if(updatedEducation[index])
+              updatedEducation[index].fieldOfStudy = e.target.value;
+              setEducation(updatedEducation);
+            }} />
+            <Input type="text" placeholder="Grade" value={edu.grade} onChange={(e) => {
+              const updatedEducation = [...education];
+              if(updatedEducation[index])
+              updatedEducation[index].grade = e.target.value;
+              setEducation(updatedEducation);
+            }} />
+          </div>
+        ))}
+        <Button type="button" onClick={() => {
+          setEducation([...education, { institution: "", degree: "", startDate: "", endDate: "", fieldOfStudy: "", grade: "" }]);
+        }}>
+          Add Education
+        </Button>
 
         <h3 className="text-lg font-semibold mt-4">Projects</h3>
-        <Input type="text" placeholder="Title" value={projects.title} onChange={(e) => setProjects({ ...projects, title: e.target.value })} />
-        <Input type="text" placeholder="Description" value={projects.description} onChange={(e) => setProjects({ ...projects, description: e.target.value })} />
+        {projects.map((proj, index) => (
+          <div key={index} className="space-y-2 border p-2">
+            <Input type="text" placeholder="Title" value={proj.title} onChange={(e) => {
+              const updatedProjects = [...projects];
+              if(updatedProjects[index])
+              updatedProjects[index].title = e.target.value;
+              setProjects(updatedProjects);
+            }} />
+            <Input type="text" placeholder="Description" value={proj.description} onChange={(e) => {
+              const updatedProjects = [...projects];
+              if(updatedProjects[index])
+              updatedProjects[index].description = e.target.value;
+              setProjects(updatedProjects);
+            }} />
+          </div>
+        ))}
+        <Button type="button" onClick={() => {
+          setProjects([...projects, { title: "", description: "" }]);
+        }}>
+          Add Project
+        </Button>
 
         <h3 className="text-lg font-semibold mt-4">Skills</h3>
         <Input type="text" placeholder="Enter skills (comma-separated)" value={skills} onChange={(e) => setSkills(e.target.value)} />
