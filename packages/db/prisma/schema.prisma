@@ -8,82 +8,73 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  userId Int?
-  name String?
-  email String? @unique
-  number String? @unique
-  password String?
-
-  resume String?
-  bio String?
-  description String?
-  image File[]
-  experience Experience[]
-  education Education[]
-  projects Projects[]
-  skills Skill[]
-  createdAt DateTime @default(now())
-}
-
-model File{
-  id Int @id @default(autoincrement())
-  name String
-  path String
-  size Int
-  uploaderName String?
-  userId Int
-  user User @relation(fields: [userId], references: [id]) 
-}
-
-model Experience{
-  id Int @id @default(autoincrement())
-  company String
-  position String
-  description String
-  startDate String
-  endDate String
-  userId Int
-  user User @relation(fields: [userId], references: [id]) 
-}
-
-model Education{
-  id Int @id @default(autoincrement())
-  institution String
-  degree String
-  startDate String
-  endDate String
-  fieldOfStudy String
-  grade String
-  userId Int
-  user User @relation(fields: [userId], references: [id]) 
-}
-
-model Projects{
-  id Int @id @default(autoincrement())
-  title String
-  description String
-  userId Int
-  user User @relation(fields: [userId], references: [id]) 
-}
-
-model Skill{
-  id Int @id @default(autoincrement())
-  name String
-  userId Int
-  user User @relation(fields: [userId], references: [id])
-}
-
-model Admin{
-  id Int @id @default(autoincrement())
-  organization String
-  name String?
-  email String? @unique
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
   password String
-  authtype Auth_Type
+  Info     Info[]
 }
 
-enum Auth_Type{
+model Info {
+  id         Int          @id @default(autoincrement())
+  name       String
+  bio        String
+  experience Experience[]
+  education  Education[]
+  projects   Projects[]
+  skills     Skill[]
+  createdAt  DateTime     @default(now())
+  userId     Int
+  user       User         @relation(fields: [userId], references: [id])
+}
+
+model Experience {
+  id          Int    @id @default(autoincrement())
+  company     String
+  position    String
+  description String
+  startDate   String
+  endDate     String
+  infoId      Int
+  info        Info   @relation(fields: [infoId], references: [id]) 
+}
+
+model Education {
+  id           Int    @id @default(autoincrement())
+  institution  String
+  degree       String
+  startDate    String
+  endDate      String
+  fieldOfStudy String
+  grade        String
+  infoId       Int
+  info         Info   @relation(fields: [infoId], references: [id]) 
+}
+
+model Projects {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+  infoId      Int
+  info        Info   @relation(fields: [infoId], references: [id]) 
+}
+
+model Skill {
+  id     Int    @id @default(autoincrement())
+  name   String
+  infoId Int
+  info   Info   @relation(fields: [infoId], references: [id])
+}
+
+model Admin {
+  id           Int       @id @default(autoincrement())
+  organization String
+  name        String?
+  email       String?  @unique
+  password    String
+  authtype    Auth_Type
+}
+
+enum Auth_Type {
   Google
   Github
   LinkedIn

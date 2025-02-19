@@ -14,11 +14,6 @@ export const authOptions = {
           type: "email",
           placeholder: "Enter your email",
         },
-        phone:{
-            label: "Phone",
-            type: "text",
-            placeholder: "Enter your phone",
-        },
         password: {
           label: "Password",
           type: "password",
@@ -46,7 +41,6 @@ export const authOptions = {
             const newUser = await prisma.user.create({
               data: {
                 email: credentials.email,
-                number: credentials.phone,
                 password: hashedPassword,
               },
             });

@@ -9,14 +9,12 @@ import { useRouter } from "next/navigation";
 export const SignUp = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
-  const [number, setNumber] = useState("");
   const [password, setPassword] = useState("");
 
   async function handleSignUp() {
     try {
       const res = await signIn("credentials", {
         email:email,
-        number: number,
         password: password,
         isSignup: true,
         redirect: false,
@@ -50,16 +48,6 @@ export const SignUp = () => {
                 }}
                 type="text"
                 label={"Email Address"}
-              />
-            </div>
-            <div>
-              <TextInput
-                placeholder="Enter your phone number"
-                onChange={(value: string) => {
-                  setNumber(value);
-                }}
-                type="text"
-                label={"Phone Number"}
               />
             </div>
 

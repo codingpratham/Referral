@@ -4,12 +4,18 @@ import { prisma } from "@repo/db/client";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-const session= await getServerSession(authOptions)
 export async function POST(req: Request) {
   try {
-    const formData = await req.formData();
+    const session= await getServerSession(authOptions)
+    if(!session.user){
+      return NextResponse.json({
+        error: "Unauthorized",
+        statusCode: 401,
+      });
+    } 
 
-    // Convert formData to a readable object
+    const formData = await req.formData();
+  
     const data: Record<string, any> = {};
     formData.forEach((value, key) => {
       data[key] = value;
