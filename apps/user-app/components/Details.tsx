@@ -20,26 +20,34 @@ const Details = () => {
   const [projects, setProjects] = useState([{ title: "", description: "" }]);
   const [skills, setSkills] = useState("");
 
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+  
+    const payload = {
+      bio,
+      name,  // Changed from "description" to "name"
+      experience,
+      education,
+      projects,
+      skills,
+    };
 
-    const formData = new FormData();
-    formData.append("bio", bio);
-    formData.append("description", name);
-    formData.append("experience", JSON.stringify(experience));
-    formData.append("education", JSON.stringify(education));
-    formData.append("projects", JSON.stringify(projects));
-    formData.append("skills", skills);
-
+    console.log(payload);
+    
+  
     try {
       const res = await fetch("/api/upload", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",  // Set correct content type
+        },
+        body: JSON.stringify(payload),  // Send JSON directly
       });
-
+  
       const data = await res.json();
       console.log("Response:", data);
-
+  
       if (res.ok) {
         alert("Profile created successfully!");
         router.push("/");
@@ -50,6 +58,7 @@ const Details = () => {
       console.error("Upload error:", error);
     }
   };
+  
 
   return (
     <div className="p-4 max-w-lg mx-auto">

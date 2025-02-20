@@ -1,11 +1,18 @@
-"use client"
-import {Appbar} from "@repo/ui/Appbar"
-import { signIn, signOut, useSession } from "next-auth/react";
+import FeaturedJobs from "@/components/FeaturedJobs";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
 export default function Home() {
-  const session = useSession()
   return (
     <>
-      <Appbar onSignin={signIn} onSignout={signOut} user={session.data?.user}/>
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-grow">
+        <Hero />
+        <FeaturedJobs />
+      </main>
+      <Footer />
+    </div>
     </>
   );
 }
