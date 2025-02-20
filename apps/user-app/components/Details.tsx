@@ -6,7 +6,9 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 
 const Details = () => {
+
   const router = useRouter();
+  
   const [bio, setBio] = useState("");
   const [name, setName] = useState("");
   const [experience, setExperience] = useState([
@@ -18,10 +20,12 @@ const Details = () => {
   ]);
 
   const [projects, setProjects] = useState([{ title: "", description: "" }]);
+  
   const [skills, setSkills] = useState("");
 
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  
     e.preventDefault();
   
     const payload = {
@@ -32,9 +36,6 @@ const Details = () => {
       projects,
       skills,
     };
-
-    console.log(payload);
-    
   
     try {
       const res = await fetch("/api/upload", {
@@ -50,7 +51,7 @@ const Details = () => {
   
       if (res.ok) {
         alert("Profile created successfully!");
-        router.push("/");
+        router.push("/dashboard");
       } else {
         throw new Error("Failed to create profile");
       }
